@@ -39,6 +39,7 @@ export class SiGame extends Game {
 
     startWaiting() {
         this.phase = "waiting";
+        lightService.waiting();
         this.sendSocketGameState();
         return;
     }
@@ -59,19 +60,21 @@ export class SiGame extends Game {
         if (right) {
             this.phase = "stop";
             lightService.right();
-            setTimeout(lightService.turnOff, 3000);
+            setTimeout(lightService.default, 3000);
             this.wrongAnswered = this.wrongAnswered || [];
         } else {
+            console.log('1');
             lightService.wrong();
-            setTimeout(lightService.turnOff, 3000);
             this.wrongAnswered = this.wrongAnswered || [];
             this.wrongAnswered.push(this.answeringTeam)
             if (this.wrongAnswered.length === this.teamsCount) {
                 this.phase = "stop";
+                setTimeout(lightService.default, 3000);
                 // light stop;
                 // socket stop;
             } else {
                 this.phase = "waiting";
+                setTimeout(lightService.waiting, 3000);
             }
         }
         this.sendSocketGameState();
@@ -89,7 +92,7 @@ export class SiGame extends Game {
         this.phase = "stop";
         this.wrongAnswered = this.wrongAnswered || [];
         // socket;
-        // light stop;
+        lightService.default();
         this.sendSocketGameState();
     }
 }
@@ -120,6 +123,7 @@ export class ChgkGame extends Game {
     startWaiting() {
         this.answered = [];
         this.phase = "waiting";
+        lightService.waiting();
         this.sendSocketGameState();
         return;
     }
@@ -135,6 +139,7 @@ export class ChgkGame extends Game {
 
     stopGame() {
         this.phase = "stop";
+        lightService.default();
         this.sendSocketGameState();
         // light stop;
 
