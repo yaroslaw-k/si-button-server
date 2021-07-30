@@ -66,16 +66,23 @@ export class SiGame extends Game {
             console.log('1');
             lightService.wrong();
             this.wrongAnswered = this.wrongAnswered || [];
-            this.wrongAnswered.push(this.answeringTeam)
-            if (this.wrongAnswered.length === this.teamsCount) {
-                this.phase = "stop";
-                setTimeout(lightService.default, 3000);
-                // light stop;
-                // socket stop;
-            } else {
-                this.phase = "waiting";
-                setTimeout(lightService.waiting, 3000);
-            }
+            this.wrongAnswered.push(this.answeringTeam);
+
+            // если у всех одна попытка
+
+            // if (this.wrongAnswered.length === this.teamsCount) {
+            //     this.phase = "stop";
+            //     setTimeout(lightService.default, 3000);
+            //     // light stop;
+            //     // socket stop;
+            // } else {
+            //     this.phase = "waiting";
+            //     setTimeout(lightService.waiting, 3000);
+            // }
+
+            //
+            this.phase = "waiting";
+            //     setTimeout(lightService.waiting, 3000);
         }
         this.sendSocketGameState();
     }
